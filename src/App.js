@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 import { Container } from 'react-bootstrap';
 import useLocalStorage from './hooks/useLocalStorage';
 
@@ -9,9 +10,11 @@ function App() {
   // app component so that it can be easily passed to children components as props
   const [id, setId] = useLocalStorage('userID', '');
 
+  console.log(id);
+
   return (
     <Container className="mt-5 pt-5">
-      <Login onIdSubmit={setId} />
+      {id ? <Dashboard userID={id} onLogout={setId} /> : <Login onIdSubmit={setId} />}
     </Container>
 
   );

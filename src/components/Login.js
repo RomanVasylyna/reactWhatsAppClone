@@ -21,11 +21,12 @@ const Login = ({ onIdSubmit }) => {
         e.preventDefault();
         onIdSubmit(idRef.current.value);
     }
-
+    
+    // Generate new userID
     const createNewId = () => {
         const generatedId = uuidv4();
         idRef.current.value = generatedId;
-        onIdSubmit(generatedId);
+        // onIdSubmit(generatedId);
     }
 
     return (
@@ -42,13 +43,14 @@ const Login = ({ onIdSubmit }) => {
                     Submit
                 </Button>
 
-                <Button variant="secondary" type="submit" onClick={createNewId}>
+                <Button variant="secondary" type="button" onClick={createNewId}>
                     Create a New ID
                 </Button>
             </Form.Group>
 
 
         </Form>
+        
     )
 }
 
