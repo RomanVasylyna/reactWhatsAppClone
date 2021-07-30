@@ -13,9 +13,9 @@ function App() {
   console.log(id);
 
   return (
-    <Container className="mt-5 pt-5">
+    <div className="mt-5">
       {id ? <Dashboard userID={id} onLogout={setId} /> : <Login onIdSubmit={setId} />}
-    </Container>
+    </div>
 
   );
 }
