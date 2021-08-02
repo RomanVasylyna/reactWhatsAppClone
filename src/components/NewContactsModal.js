@@ -13,7 +13,6 @@ const NewContactsModal = ({ onClose, modalStatus }) => {
         onClose();
     }
 
-
     return (
         <>
             <Modal show={modalStatus} onHide={onClose}>
