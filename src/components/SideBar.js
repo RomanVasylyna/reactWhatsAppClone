@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
-import { Nav, Tab } from 'react-bootstrap';
+import { Nav, Tab, Button } from 'react-bootstrap';
 import Conversations from '../components/Conversations';
 import Contacts from '../components/Contacts';
+import NewConversationsModal from '../components/NewConversationsModal';
+import NewContactsModal from '../components/NewContactsModal';
 
-const SideBar = ({ userID }) => {
+const SideBar = ({ userID, onLogout }) => {
 
-    const CONVERSATIONS_KEY = 'conversations';
-    const CONTACTS_KEY = 'contacts';
+    const CONVERSATIONS_KEY = 'Conversations';
+    const CONTACTS_KEY = 'Contacts';
 
     const [activeKey, setActiveKey] = useState(CONVERSATIONS_KEY);
 
+    // Toggling Modal
+    const [showModal, setShowModal] = useState(false);
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
+
     return (
-        <div style={{ width: '250px' }} className="d-flex flex-column">
+        <div style={{ width: '250px', height: '100vh' }} className="d-flex flex-column">
             <Tab.Container activeKey={activeKey}>
                 <Nav variant="tabs" className="justify-content-center">
                     <Nav.Item>
@@ -41,7 +48,32 @@ const SideBar = ({ userID }) => {
 
                 </Tab.Content>
 
+                <div className="ps-3 border-top border-end">
+                    <p><strong>My id : </strong><span className="text-muted">{userID}</span></p>
+                </div>
+
+                <Button className="mb-1 rounded-0" onClick={handleShow}>
+                    New {activeKey == CONVERSATIONS_KEY ? 'Conversation' : 'Contact'}
+                </Button>
+
+                <Button variant="danger rounded-0" className="mb-3" onClick={() => onLogout('')}>Logout</Button>
+
             </Tab.Container>
+
+
+            {/* Add New Conversations/Contact Modal */}
+            {activeKey == CONVERSATIONS_KEY ?
+                <NewConversationsModal
+                    onClose={handleClose}
+                    modalStatus={showModal} />
+                :
+                <NewContactsModal
+                    onClose={handleClose}
+                    modalStatus={showModal} />}
+
+
+
+
         </div>
     )
 }

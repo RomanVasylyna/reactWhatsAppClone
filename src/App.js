@@ -13,7 +13,7 @@ function App() {
   console.log(id);
 
   return (
-    <div className="mt-5">
+    <div className="mt-1">
       {id ? <Dashboard userID={id} onLogout={setId} /> : <Login onIdSubmit={setId} />}
     </div>
 
