@@ -30,7 +30,7 @@ export default function useLocalStorage(key, initialVal) {
     // Here we're going to create a custom hook
     // Custom hook's name should start with use
 
-    const prefixedKey = PREFIX + key;
+    const prefixedKey = PREFIX + key; // 'whatsapp-clone-userID'
 
     const [value, setValue] = useState(() => getSavedValue(prefixedKey, initialVal));
 

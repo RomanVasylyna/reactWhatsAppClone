@@ -4,30 +4,25 @@ import Dashboard from './components/Dashboard';
 import { Button } from 'react-bootstrap';
 import useLocalStorage from './hooks/useLocalStorage';
 import FunctionContextComponent from './components/FunctionContextComponent';
-
-// Создаем контекст + делаем импортируемым
-export const ThemeContext = React.createContext();
+// import { ThemeProvider } from './hooks/ThemeContext';
 
 function App() {
 
   const [id, setId] = useLocalStorage('userID', '');
 
-  // Стейт темы
-  const [darkTheme, setDarkTheme] = useState(true);
-
-  // Тогглим тему
-  const toggleTheme = () => {
-    setDarkTheme(!darkTheme)
-  };
 
   return (
     // <div className="mt-1">
     <div className="mx-auto text-center">
 
-      <ThemeContext.Provider value={darkTheme}>
-        <Button onClick={toggleTheme}>Toggle theme</Button>
+      <FunctionContextComponent />
+
+
+      {/*
+      <ThemeProvider>
         <FunctionContextComponent />
-      </ThemeContext.Provider>
+      </ThemeProvider> */}
+
 
       {/* {id ? <Dashboard userID={id} onLogout={setId} /> : <Login onIdSubmit={setId} />} */}
       {/* </div> */}

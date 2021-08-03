@@ -21,7 +21,7 @@ const Login = ({ onIdSubmit }) => {
         e.preventDefault();
         onIdSubmit(idRef.current.value);
     }
-    
+
     // Generate new userID
     const createNewId = () => {
         const generatedId = uuidv4();
@@ -50,7 +50,7 @@ const Login = ({ onIdSubmit }) => {
 
 
         </Form>
-        
+
     )
 }
 
