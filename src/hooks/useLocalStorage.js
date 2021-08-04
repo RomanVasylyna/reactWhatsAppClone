@@ -1,44 +1,39 @@
+// Import react basic hooks
 import { useState, useEffect } from 'react';
 
-// key is the item that will be stored in localStorage
-// this function helps us get key item from localStorage
-// localStorage only stores info in the JSON format
-// JSON.parse turns string that we receive from localStorage into JS object
-// JSON.stringify turns JS object into a string so that it could be stored in ls
+// Prefix that indicates that this localStorage value belongs to this project
+const PREFIX = 'whatsapp-clone-';
 
 
-// Various Apps may have conflicting items in localStore PREFIX makes sure this
-// hook is unique
-const PREFIX = 'whatsapp-clone-'
+// Getting value from localStorage
+const getVal = (key, initValue) => {
 
-// InitialVal is smth that we normally pass to useState()
-const getSavedValue = (key, initialVal) => {
+    // Getting Value from localStorage
+    const storageItem = JSON.parse(localStorage.getItem(key));
 
-    const savedVal = JSON.parse(localStorage.getItem(key));
+    // If item exists function should return it otherwise return default value
+    // Default value as well as keyname can be set inside custom hook's initial values
+    return storageItem ? storageItem : initValue;
 
-    // If we have saved smth in the LS then get this stuff from LS
-    // If the data was not saved in the LS then default value should prevail
-    return savedVal ? savedVal : initialVal;
+    return initValue;
 
-    // Here we check if initVal is a function or not
-    return initialVal instanceof Function ? initialVal() : initialVal;
 }
 
 
-// Exporting the custom hook
-export default function useLocalStorage(key, initialVal) {
-    // Here we're going to create a custom hook
-    // Custom hook's name should start with use
+export default function useLocalStorage(key, initValue) {
 
-    const prefixedKey = PREFIX + key; // 'whatsapp-clone-userID'
+    // Combining prefix and custom key
+    const prefixedKey = PREFIX + key;
 
-    const [value, setValue] = useState(() => getSavedValue(prefixedKey, initialVal));
+    // In the useState we call a getVal function that gets items from localStorage
+    // and sets them as default
+    const [value, setValue] = useState(() => getVal(prefixedKey, initValue));
 
-    // In the useEffect hook we are setting a value to locaStorage
+    // As soon as component renders the value is going to added to localStorage
     useEffect(() => {
         localStorage.setItem(prefixedKey, JSON.stringify(value));
     }, [value])
 
+    return [value, setValue]; // simulating the behaviour of useState
 
-    return [value, setValue] // This is going to replicate the behaviour of useState
 }

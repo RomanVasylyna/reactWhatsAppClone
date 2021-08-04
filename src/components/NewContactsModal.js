@@ -1,15 +1,22 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 
 const NewContactsModal = ({ onClose, modalStatus }) => {
 
     const idRef = useRef('');
     const nameRef = useRef('');
+    
+    // Add Contact Logic
+    const [contacts, setContacts] = useState([]);
+
+    const createContact = (id, name) => {
+    setContacts([...contacts, {id, name}]);
+    }
 
     const handleSubmit = e => {
         e.preventDefault();
 
-        // createContact(idRef.current.value, nameRef.current.value);
+        createContact(idRef.current.value, nameRef.current.value);
         onClose();
     }
 
