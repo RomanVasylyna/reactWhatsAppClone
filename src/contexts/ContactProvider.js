@@ -4,7 +4,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 // Initializing context
 const ContactsContext = React.createContext();
 
-// Exporting 
+// Creating a wrapper that allows to use context outside
 export const useContacts = () =>{
     return useContext(ContactsContext);
 }

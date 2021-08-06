@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import React from 'react';
+import { Image } from 'react-bootstrap';
 import { useContacts } from '../contexts/ContactProvider';
 
 // Здесь нужно через контекст получить массив с контактами а затем в цикле прогнать
@@ -10,16 +10,19 @@ import { useContacts } from '../contexts/ContactProvider';
 
 const Contacts = () => {
 
-    const contacts = JSON.parse(localStorage.getItem('whatsapp-clone-contacts'));
 
-    useEffect(() => {
-        console.log(contacts);
-    }, [contacts]);
-
+    // Get contacts from context
+    const { contacts } = useContacts();
 
     return (
         <div className="d-flex flex-column pe-2 pt-3">
-            { contacts ? contacts.map(contact => <Button key={contact.id} variant="success" className="mb-1">{contact.name}</Button>) : <p>You have no contacts</p> }
+            {contacts.length ?
+                contacts.map(contact => <div key={contact.id} className="mb-1 border-bottom" style={{ cursor: 'pointer'}}>
+                    <Image src="https://img.icons8.com/ios-glyphs/50/000000/user-male--v1.png" style={{ width: '3vw', marginRight: '5px'}} rounded/>
+                    <span>{contact.name}</span>
+                </div>)
+                : <p>You have no contacts yet...</p>
+            }
         </div>
     )
 }

@@ -7,6 +7,11 @@ import NewContactsModal from '../components/NewContactsModal';
 
 const SideBar = ({ userID, onLogout }) => {
 
+    const endUserSession = () => {
+    onLogout('');
+    JSON.parse(localStorage.removeItem('whatsapp-clone-contacts'));
+    }
+
     const CONVERSATIONS_KEY = 'Conversations';
     const CONTACTS_KEY = 'Contacts';
 
@@ -56,7 +61,7 @@ const SideBar = ({ userID, onLogout }) => {
                     New {activeKey == CONVERSATIONS_KEY ? 'Conversation' : 'Contact'}
                 </Button>
 
-                <Button variant="danger rounded-0" className="mb-3" onClick={() => onLogout('')}>Logout</Button>
+                <Button variant="danger rounded-0" className="mb-3" onClick={() => endUserSession()}>Logout</Button>
 
             </Tab.Container>
 
