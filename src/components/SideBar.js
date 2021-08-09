@@ -9,7 +9,8 @@ const SideBar = ({ userID, onLogout }) => {
 
     const endUserSession = () => {
     onLogout('');
-    JSON.parse(localStorage.removeItem('whatsapp-clone-contacts'));
+    localStorage.removeItem('whatsapp-clone-contacts');
+    localStorage.removeItem('whatsapp-clone-conversations');
     }
 
     const CONVERSATIONS_KEY = 'Conversations';

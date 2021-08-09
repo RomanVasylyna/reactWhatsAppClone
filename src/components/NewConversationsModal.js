@@ -1,21 +1,28 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { useContacts } from '../contexts/ContactProvider';
+import { useConversation } from '../contexts/ConversationProvider';
 
 const NewConversationsModal = ({ onClose, modalStatus }) => {
-
-    const idRef = useRef('');
-    const nameRef = useRef('');
     
     // State that defines whether the check
-    // const [selectedContactId, setSelectedContactId] = useState(false);
-
+    const [selectedContactId, setSelectedContactId] = useState([]);
+    
+    // Checking if state includes id of the value in checkbox
+    const checkSelectedId = id => {
+    setSelectedContactId(contacts.filter(contact => contact.id == id)[0].id);
+    }
+    
+    // Contacts array from contacts context
     const { contacts } = useContacts();
+    const { createConversation } = useConversation();
+    const { conversations } = useConversation();
 
     const handleSubmit = e => {
         e.preventDefault();
-
-        // createConversation(idRef.current.value, nameRef.current.value);
+        
+        createConversation(selectedContactId);
+        console.log(conversations);
         onClose();
     }
 
@@ -31,7 +38,12 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
                     <Form className="mx-auto" onSubmit={handleSubmit}>
                         {contacts.length ? contacts.map(contact =>
                             <Form.Group>
-                                <Form.Check type="checkbox" value={contact.id} label={contact.name} key={contact.id}></Form.Check>
+                                <Form.Check 
+                                type="checkbox" 
+                                value={selectedContactId ? selectedContactId.includes(contact.id) : ''} 
+                                label={contact.name} 
+                                key={contact.id}
+                                onChange={() => checkSelectedId(contact.id)}/>
                             </Form.Group>
                         ) :
                             <p>Currently you have no contacts. Please add someone to contact list first.</p>}

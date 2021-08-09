@@ -3,6 +3,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import useLocalStorage from './hooks/useLocalStorage';
 import { ContactProvider } from './contexts/ContactProvider';
+import { ConversationProvider } from './contexts/ConversationProvider';
 
 
 function App() {
@@ -11,7 +12,9 @@ function App() {
 
   const dashboardProvider = (
     <ContactProvider>
+      <ConversationProvider>
       <Dashboard userID={id} onLogout={setId}/>
+      </ConversationProvider>
     </ContactProvider>
   );
 
