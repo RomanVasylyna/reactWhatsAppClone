@@ -4,15 +4,15 @@ import { useContacts } from '../contexts/ContactProvider';
 import { useConversation } from '../contexts/ConversationProvider';
 
 const NewConversationsModal = ({ onClose, modalStatus }) => {
-    
+
     // State that defines whether the check
     const [selectedContactId, setSelectedContactId] = useState([]);
-    
+
     // Checking if state includes id of the value in checkbox
     const checkSelectedId = id => {
     setSelectedContactId(contacts.filter(contact => contact.id == id)[0].id);
     }
-    
+
     // Contacts array from contacts context
     const { contacts } = useContacts();
     const { createConversation } = useConversation();
@@ -20,9 +20,8 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        
+
         createConversation(selectedContactId);
-        console.log(conversations);
         onClose();
     }
 
@@ -38,10 +37,10 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
                     <Form className="mx-auto" onSubmit={handleSubmit}>
                         {contacts.length ? contacts.map(contact =>
                             <Form.Group>
-                                <Form.Check 
-                                type="checkbox" 
-                                value={selectedContactId ? selectedContactId.includes(contact.id) : ''} 
-                                label={contact.name} 
+                                <Form.Check
+                                type="checkbox"
+                                value={selectedContactId ? selectedContactId.includes(contact.id) : ''}
+                                label={contact.name}
                                 key={contact.id}
                                 onChange={() => checkSelectedId(contact.id)}/>
                             </Form.Group>

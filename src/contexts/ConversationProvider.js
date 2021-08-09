@@ -14,7 +14,8 @@ export const ConversationProvider = ({ children }) => {
     const [conversations, setConversations] = useLocalStorage('conversations', []);
 
     const createConversation = (personID) => {
-        return setConversations(conversations.map(conversation => conversation.personID != personID) ? [...conversations, { personID, messages:[] }] : '');
+        return conversations.map(conversation => conversation.personID != personID ? setConversations([...conversations, { personID, messages:[] }]) : null);
+        // return setConversations([...conversations, { personID, messages:[] }]);
     }
 
     return (
