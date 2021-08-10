@@ -6,12 +6,25 @@ const NewContactsModal = ({ onClose, modalStatus }) => {
 
     const idRef = useRef('');
     const nameRef = useRef('');
+    const { contacts } = useContacts();
     const { createContacts } = useContacts();
+
+
+    // Remove duplicates from objects of contacts
+    const removeDuplicates = () => {
+        const contactExists = contacts.some(el => el.id === idRef.current.value || el.name === nameRef.current.value);
+
+        if (!contactExists) {
+            createContacts(idRef.current.value, nameRef.current.value);
+        } else {
+            alert('This person is already in your contact list!');
+        }
+    }
 
     const handleSubmit = e => {
         e.preventDefault();
-        
-        createContacts(idRef.current.value, nameRef.current.value);
+
+        removeDuplicates();
         onClose();
     }
 
