@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useContacts } from '../contexts/ContactProvider';
 
 // Initializing context
 const ConversationContext = React.createContext();
@@ -11,11 +12,11 @@ export const useConversation = () => {
 
 export const ConversationProvider = ({ children }) => {
 
+    const { contacts } = useContacts();
     const [conversations, setConversations] = useLocalStorage('conversations', []);
 
-    const createConversation = (personID) => {
-        return conversations.map(conversation => conversation.personID != personID ? setConversations([...conversations, { personID, messages:[] }]) : null);
-        // return setConversations([...conversations, { personID, messages:[] }]);
+    const createConversation = (contactID) => {
+        return setConversations([...conversations, { contactID, contactName: contacts.filter(contact => contact.id === contactID)[0].name, messages: [] }]);
     }
 
     return (

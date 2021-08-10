@@ -10,7 +10,7 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
 
     // Checking if state includes id of the value in checkbox
     const checkSelectedId = id => {
-    setSelectedContactId(contacts.filter(contact => contact.id == id)[0].id);
+        setSelectedContactId(contacts.filter(contact => contact.id == id)[0].id);
     }
 
     // Contacts array from contacts context
@@ -18,9 +18,16 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
     const { createConversation } = useConversation();
     const { conversations } = useConversation();
 
+    // Remove Duplicates from Array
+    // const removeDuplicates = (arr) => {
+    //     return arr.filter((conversation, index) => {
+    //         return arr.map(conversation => conversation.people).indexOf(conversation.people) == index;
+    //     });
+    // }
+
     const handleSubmit = e => {
         e.preventDefault();
-
+        
         createConversation(selectedContactId);
         onClose();
     }
@@ -38,11 +45,11 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
                         {contacts.length ? contacts.map(contact =>
                             <Form.Group>
                                 <Form.Check
-                                type="checkbox"
-                                value={selectedContactId ? selectedContactId.includes(contact.id) : ''}
-                                label={contact.name}
-                                key={contact.id}
-                                onChange={() => checkSelectedId(contact.id)}/>
+                                    type="checkbox"
+                                    value={selectedContactId ? selectedContactId.includes(contact.id) : ''}
+                                    label={contact.name}
+                                    key={contact.id}
+                                    onChange={() => checkSelectedId(contact.id)} />
                             </Form.Group>
                         ) :
                             <p>Currently you have no contacts. Please add someone to contact list first.</p>}
