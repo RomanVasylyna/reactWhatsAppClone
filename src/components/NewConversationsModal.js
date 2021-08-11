@@ -6,10 +6,6 @@ import { useConversation } from '../contexts/ConversationProvider';
 
 const NewConversationsModal = ({ onClose, modalStatus }) => {
 
-    // conversation [recepients: [{contactID: "123", contactName: "Jack", messages: []} }]]
-
-    // conversations [{recepients: {contactID: "123", contactName: "Jack", messages: []} }]
-    // {contactID: "123", contactName: "Jack", messages: []}
 
     // State that defines whether the check
     // const [selectedContactId, setSelectedContactId] = useState([]);
@@ -18,12 +14,29 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
     // const checkSelectedId = id => {
     //     setSelectedContactId(contacts.filter(contact => contact.id == id)[0].id);
     // }
-    
-    const [selectedContactIds, setSelectedContactIds] = useState([]);
 
-    const checkSelectedIds = id => {
-        setSelectedContactIds(ids => [...ids, id]);
+    const [selectedContactIds, setSelectedContactIds] = useState([]);
+    const [checkedElem, setCheckedElem] = useState(false);
+
+
+    // Add id to the state
+    const checkSelectedIds = (e, id) => {
+        // const val = e.target.value;
+        // val ? alert('True') : alert('False');
+
+        const checkForDuplicates = selectedContactIds.includes(id);
+        if (!checkForDuplicates) {
+            setSelectedContactIds(ids => [...ids, id]);
+        }
+
+        // If checkbox is not checked - remove id from array
+        setCheckedElem(!checkedElem);
+        if (!checkedElem) {
+            setSelectedContactIds(selectedContactIds.filter(elem => elem != sid))
+        }
+
     }
+
 
     // Contacts array from contacts context
     const { contacts } = useContacts();
@@ -46,8 +59,6 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
         e.preventDefault();
 
         createConversation(selectedContactIds);
-        setSelectedContactIds([]);
-
         // removeDuplicates();
         onClose();
     }
@@ -66,10 +77,10 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
                             <Form.Group>
                                 <Form.Check
                                     type="checkbox"
-                                    value={selectedContactIds ? selectedContactIds.includes(contact.id) : ''}
+                                    value={selectedContactIds.includes(contact.id)}
                                     label={contact.name}
                                     key={contact.id}
-                                    onChange={() => checkSelectedIds(contact.id)} />
+                                    onChange={e => checkSelectedIds(e, contact.id)} checked={checkedElem} />
                             </Form.Group>
                         ) :
                             <p>Currently you have no contacts. Please add someone to contact list first.</p>}
