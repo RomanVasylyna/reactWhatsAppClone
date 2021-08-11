@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
+import { isDOMComponent } from 'react-dom/test-utils';
 import { useContacts } from '../contexts/ContactProvider';
 import { useConversation } from '../contexts/ConversationProvider';
 
 const NewConversationsModal = ({ onClose, modalStatus }) => {
 
+    // conversation [recepients: [{contactID: "123", contactName: "Jack", messages: []} }]]
+
+    // conversations [{recepients: {contactID: "123", contactName: "Jack", messages: []} }]
+    // {contactID: "123", contactName: "Jack", messages: []}
+
     // State that defines whether the check
-    const [selectedContactId, setSelectedContactId] = useState([]);
+    // const [selectedContactId, setSelectedContactId] = useState([]);
 
     // Checking if state includes id of the value in checkbox
-    const checkSelectedId = id => {
-        setSelectedContactId(contacts.filter(contact => contact.id == id)[0].id);
+    // const checkSelectedId = id => {
+    //     setSelectedContactId(contacts.filter(contact => contact.id == id)[0].id);
+    // }
+    
+    const [selectedContactIds, setSelectedContactIds] = useState([]);
+
+    const checkSelectedIds = id => {
+        setSelectedContactIds(ids => [...ids, id]);
     }
 
     // Contacts array from contacts context
@@ -19,21 +31,24 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
     const { conversations } = useConversation();
 
     // Remove duplicates from objects of conversations
-    const removeDuplicates = () => {
-        const conversationExists = conversations.some(el => el.contactID === selectedContactId);
+    // const removeDuplicates = () => {
+    //     const conversationExists = conversations.some(el => el.contactID === selectedContactId);
 
-        if (!conversationExists) {
-            createConversation(selectedContactId);
-        } else {
-            alert('You have already started conversation with this person');
-        }
-    }
+    //     if (!conversationExists) {
+    //         createConversation(selectedContactId);
+    //     } else {
+    //         alert('You have already started conversation with this person');
+    //     }
+    // }
 
     // Functions that fire when form/modal is submitted
     const handleSubmit = e => {
         e.preventDefault();
 
-        removeDuplicates();
+        createConversation(selectedContactIds);
+        setSelectedContactIds([]);
+
+        // removeDuplicates();
         onClose();
     }
 
@@ -51,10 +66,10 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
                             <Form.Group>
                                 <Form.Check
                                     type="checkbox"
-                                    value={selectedContactId ? selectedContactId.includes(contact.id) : ''}
+                                    value={selectedContactIds ? selectedContactIds.includes(contact.id) : ''}
                                     label={contact.name}
                                     key={contact.id}
-                                    onChange={() => checkSelectedId(contact.id)} />
+                                    onChange={() => checkSelectedIds(contact.id)} />
                             </Form.Group>
                         ) :
                             <p>Currently you have no contacts. Please add someone to contact list first.</p>}

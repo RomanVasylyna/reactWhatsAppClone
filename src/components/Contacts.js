@@ -23,23 +23,6 @@ const Contacts = () => {
             ) : <p>You have no contacts yet...</p>}
         </ListGroup>
 
-
-
-
-        // {contacts.length ?
-        //     contacts.map(contact => <div key={contact.id} className="mb-1 border-bottom" style={{ cursor: 'pointer' }}>
-
-        //         <ListGroup variant="flush">
-        //             <ListGroup.Item key={contact.id}>
-        //                 {contact.name}
-        //             </ListGroup.Item>
-        //         </ListGroup>
-
-        //         {/* <Image src="https://img.icons8.com/ios-glyphs/50/000000/user-male--v1.png" style={{ width: '3vw', marginRight: '5px' }} rounded />
-        //         <span>{contact.name}</span> */}
-        //     </div>)
-        //     : <p>You have no contacts yet...</p>
-        // }
     )
 }
 
