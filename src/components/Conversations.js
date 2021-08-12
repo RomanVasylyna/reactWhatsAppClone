@@ -8,12 +8,18 @@ const Conversations = () => {
 
     return (
         <ListGroup variant="flush">
-        {conversations.length ? conversations.map(conversation =>
-            <ListGroup.Item key={conversation.contactID}>
-                <span>{conversation.contactName}</span>
-            </ListGroup.Item>
-        ) : <p>You have no conversations yet...</p>}
+            {conversations.length ? conversations.map(recipient =>
+                <ListGroup.Item key={recipient.recipientID}>
+                    <span>{recipient.contactName}</span>
+                </ListGroup.Item>) :<p>You have no conversations yet...</p> }
         </ListGroup>
+        // <ListGroup variant="flush">
+        // {conversations.length ? conversations.recipients.map(recipient =>
+        //     <ListGroup.Item key={recipient.recipientID}>
+        //         <span>{recipient.contactName}</span>
+        //     </ListGroup.Item>
+        // ) : <p>You have no conversations yet...</p>}
+        // </ListGroup>
     )
 }
 

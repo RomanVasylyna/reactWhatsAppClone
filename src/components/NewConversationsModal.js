@@ -16,25 +16,14 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
     // }
 
     const [selectedContactIds, setSelectedContactIds] = useState([]);
-    const [checkedElem, setCheckedElem] = useState(false);
 
-
-    // Add id to the state
-    const checkSelectedIds = (e, id) => {
-        // const val = e.target.value;
-        // val ? alert('True') : alert('False');
-
-        const checkForDuplicates = selectedContactIds.includes(id);
-        if (!checkForDuplicates) {
+    // Upon onchange event id from checkbox gets added to the state
+    const checkSelectedIds = (id) => {
+        if (!selectedContactIds.includes(id)) {
             setSelectedContactIds(ids => [...ids, id]);
+        } else {
+            setSelectedContactIds(selectedContactIds.filter(el => el != id));
         }
-
-        // If checkbox is not checked - remove id from array
-        setCheckedElem(!checkedElem);
-        if (!checkedElem) {
-            setSelectedContactIds(selectedContactIds.filter(elem => elem != sid))
-        }
-
     }
 
 
@@ -61,6 +50,7 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
         createConversation(selectedContactIds);
         // removeDuplicates();
         onClose();
+        setSelectedContactIds([]); //Clear State
     }
 
     return (
@@ -80,7 +70,7 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
                                     value={selectedContactIds.includes(contact.id)}
                                     label={contact.name}
                                     key={contact.id}
-                                    onChange={e => checkSelectedIds(e, contact.id)} checked={checkedElem} />
+                                    onChange={() => checkSelectedIds(contact.id)} />
                             </Form.Group>
                         ) :
                             <p>Currently you have no contacts. Please add someone to contact list first.</p>}
