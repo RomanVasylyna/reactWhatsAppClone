@@ -16,7 +16,7 @@ export const ConversationProvider = ({ children }) => {
     const [conversations, setConversations] = useLocalStorage('conversations', []);
 
     const createConversation = (ids) => {
-        return setConversations([...conversations, { recipients: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name, messages: [] } }) }]);
+        return setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name, messages: [] } }) }]);
     }
 
     return (
