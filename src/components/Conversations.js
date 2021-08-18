@@ -18,8 +18,8 @@ const Conversations = () => {
         <ListGroup variant="flush">
             {conversations.length ?
                 conversations.map(conversation => conversation.newConversation.map(conversation => conversation.contactName).join(',')).map((name, index) =>
-                    <ListGroup.Item 
-                    key={index} 
+                    <ListGroup.Item
+                    key={index}
                     action
                     onClick={() => selectConversationIndex(index)}>
                         {name}

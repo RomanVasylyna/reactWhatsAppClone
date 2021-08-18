@@ -15,10 +15,12 @@ export const ConversationProvider = ({ children }) => {
     const { contacts } = useContacts();
     const [conversations, setConversations] = useLocalStorage('conversations', []);
 
-    const [selectedConversationIndex, setSelectedConversationIndex] = useLocalStorage('activeConversation', []);
+    const [selectedConversationIndex, setSelectedConversationIndex] = useState();
+
+    // const [selectedConversationIndex, setSelectedConversationIndex] = useLocalStorage('activeConversation', []);
 
     const selectConversationIndex = (index) => {
-       return setSelectedConversationIndex(conversations.filter((el, ind) => ind === index));
+        console.log(conversations.filter((el, ind) => ind === index)[0].selected);
     }
 
     const createConversation = (ids) => {
