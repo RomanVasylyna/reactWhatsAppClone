@@ -15,16 +15,27 @@ export const ConversationProvider = ({ children }) => {
     const { contacts } = useContacts();
     const [conversations, setConversations] = useLocalStorage('conversations', []);
 
-    const [selectedConversationIndex, setSelectedConversationIndex] = useState();
-
-    // const [selectedConversationIndex, setSelectedConversationIndex] = useLocalStorage('activeConversation', []);
+    const [selectedConversationIndex, setSelectedConversationIndex] = useState(0);
 
     const selectConversationIndex = (index) => {
-        console.log(conversations.filter((el, ind) => ind === index)[0].selected);
+        setSelectedConversationIndex(index);
+        console.log(conversations.filter(conversation => conversation.selected));
+        return setConversations(conversations.map((el, ind) => ind === index ? {...el, selected: true} : {...el, selected: false}));
+
+        // [conversations]
+        // {newConversation}
+        // return setConversations([...conversations]);
+        // let match = conversations.filter((el, ind) => ind === index)[0];
+        // let toggler = false;
+        //console.log(selectedConversationIndex);
+        // return setConversations({...conversations.filter((el, ind) => ind === index)[0], selected:toggler});
     }
 
     const createConversation = (ids) => {
-        return setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name, messages: [] } }), selected: false}]);
+        return ids.length ? 
+            setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name, messages: [] } }), selected: false }])
+            :
+            alert('Please choose at least one recipient');
     }
 
     return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, ListGroup } from 'react-bootstrap';
 import { useConversation } from '../contexts/ConversationProvider';
 
@@ -13,6 +13,16 @@ const Conversations = () => {
     // active={conversation.selected}
     // onClick={() => selectConversationIndex(index)
 
+    const test = () => {
+    console.log(conversations.filter(conversation => !conversation.selected));    
+    }
+
+    useEffect(() => {
+    test();
+    })
+
+    
+
     return (
 
         <ListGroup variant="flush">
@@ -21,7 +31,8 @@ const Conversations = () => {
                     <ListGroup.Item
                     key={index}
                     action
-                    onClick={() => selectConversationIndex(index)}>
+                    onClick={() => selectConversationIndex(index)}
+                    active>
                         {name}
                     </ListGroup.Item>
                 ) : <p>You have no conversations yet...</p>}
