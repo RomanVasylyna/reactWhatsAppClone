@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Image, ListGroup } from 'react-bootstrap';
 import { useConversation } from '../contexts/ConversationProvider';
 
@@ -13,15 +13,14 @@ const Conversations = () => {
     // active={conversation.selected}
     // onClick={() => selectConversationIndex(index)
 
-    const test = () => {
-    console.log(conversations.filter(conversation => !conversation.selected));    
+    // Если индекс ListGroup.Item совпадает с индексом родительского массиваыыы
+
+    const findMatch = () => {
+
     }
+     
+    console.log(conversations.map((conversation, index) => index === selectConversationIndex));
 
-    useEffect(() => {
-    test();
-    })
-
-    
 
     return (
 

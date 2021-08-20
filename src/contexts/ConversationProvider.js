@@ -19,16 +19,8 @@ export const ConversationProvider = ({ children }) => {
 
     const selectConversationIndex = (index) => {
         setSelectedConversationIndex(index);
-        console.log(conversations.filter(conversation => conversation.selected));
+        // console.log(conversations.filter(conversation => conversation.selected));
         return setConversations(conversations.map((el, ind) => ind === index ? {...el, selected: true} : {...el, selected: false}));
-
-        // [conversations]
-        // {newConversation}
-        // return setConversations([...conversations]);
-        // let match = conversations.filter((el, ind) => ind === index)[0];
-        // let toggler = false;
-        //console.log(selectedConversationIndex);
-        // return setConversations({...conversations.filter((el, ind) => ind === index)[0], selected:toggler});
     }
 
     const createConversation = (ids) => {
