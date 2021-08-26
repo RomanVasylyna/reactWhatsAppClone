@@ -19,7 +19,7 @@ function App() {
   );
 
   return (
-    <div className="mt-1">
+    <div className="">
       {id ? dashboardProvider : <Login onIdSubmit={setId} />}
     </div>
 

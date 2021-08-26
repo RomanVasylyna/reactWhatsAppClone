@@ -19,7 +19,6 @@ export const ConversationProvider = ({ children }) => {
 
     const selectConversationIndex = (index) => {
         setSelectedConversationIndex(index);
-        // console.log(conversations.filter(conversation => conversation.selected));
         return setConversations(conversations.map((el, ind) => ind === index ? {...el, selected: true} : {...el, selected: false}));
     }
 
@@ -31,7 +30,7 @@ export const ConversationProvider = ({ children }) => {
     }
 
     return (
-        <ConversationContext.Provider value={{ conversations, createConversation, selectConversationIndex }}>
+        <ConversationContext.Provider value={{ conversations, createConversation, selectConversationIndex, selectedConversationIndex }}>
             {children}
         </ConversationContext.Provider>
     )

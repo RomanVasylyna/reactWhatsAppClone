@@ -4,7 +4,7 @@ import { useConversation } from '../contexts/ConversationProvider';
 
 const Conversations = () => {
 
-    const { conversations, selectConversationIndex } = useConversation();
+    const { conversations, selectConversationIndex, selectedConversationIndex } = useConversation();
     // 1. передаем индекс текущего разговора в функцию по клику
     // 2. Функция сопоставляет индексы (находит нужный разговор)
     // 3. добавляем свойство selected в объект с разговором совпадающим с индексом
@@ -19,8 +19,8 @@ const Conversations = () => {
 
     }
      
-    console.log(conversations.map((conversation, index) => index === selectConversationIndex));
-
+    // console.log(conversations.filter((conversation, index) => conversation.selected));
+    console.log(selectedConversationIndex);
 
     return (
 
@@ -31,7 +31,7 @@ const Conversations = () => {
                     key={index}
                     action
                     onClick={() => selectConversationIndex(index)}
-                    active>
+                    active={index === selectedConversationIndex}>
                         {name}
                     </ListGroup.Item>
                 ) : <p>You have no conversations yet...</p>}
