@@ -6,15 +6,6 @@ import { useConversation } from '../contexts/ConversationProvider';
 
 const NewConversationsModal = ({ onClose, modalStatus }) => {
 
-
-    // State that defines whether the check
-    // const [selectedContactId, setSelectedContactId] = useState([]);
-
-    // Checking if state includes id of the value in checkbox
-    // const checkSelectedId = id => {
-    //     setSelectedContactId(contacts.filter(contact => contact.id == id)[0].id);
-    // }
-
     const [selectedContactIds, setSelectedContactIds] = useState([]);
 
     // Upon onchange event id from checkbox gets added to the state

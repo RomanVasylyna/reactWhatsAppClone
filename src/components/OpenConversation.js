@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useConversation } from '../contexts/ConversationProvider';
 
 const OpenConversation = () => {
 
     const { conversations } = useConversation();
-    const [ currentCoversation, setCurrentConversation] = useState({});
+    const [currentConversation, setCurrentConversation] = useState([]);
 
-    const getCurrentConversation = () => {
-        setCurrentConversation({});
+    useEffect(() => {
         setCurrentConversation(conversations.filter(conversation => conversation.selected));
-    }
+    }, [conversations]);
+
+    console.log(currentConversation[0].newConversation);
+
 
     return (
-        <div style={{ marginLeft: '30px', paddingTop: '20px'}}>
-            <h1 onClick={() => getCurrentConversation()}>Current Conversation</h1>
-            <p></p>
+        <div style={{ marginLeft: '30px', paddingTop: '20px' }}>
+            <h1>Current Conversation</h1>
+            <p>Participants: {currentConversation[0].newConversation.map((conv, index) => {
+                if (index !== currentConversation[0].newConversation.length - 1) {
+                    return <span>{conv.contactName}, </span>
+                } else {
+                    return <span>{conv.contactName}</span>
+                }
+            })}</p>
         </div>
     )
 }

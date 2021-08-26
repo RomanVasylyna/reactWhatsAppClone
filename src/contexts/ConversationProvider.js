@@ -23,7 +23,7 @@ export const ConversationProvider = ({ children }) => {
     }
 
     const createConversation = (ids) => {
-        return ids.length ? 
+        return ids.length ?
             setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name, messages: [] } }), selected: false }])
             :
             alert('Please choose at least one recipient');
