@@ -12,7 +12,7 @@ function App() {
 
   const dashboardProvider = (
     <ContactProvider>
-      <ConversationProvider>
+      <ConversationProvider userID={id}>
       <Dashboard userID={id} onLogout={setId}/>
       </ConversationProvider>
     </ContactProvider>
