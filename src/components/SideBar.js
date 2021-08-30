@@ -24,7 +24,7 @@ const SideBar = ({ userID, onLogout }) => {
     const handleShow = () => setShowModal(true);
 
     return (
-        <div style={{ width: '250px', height: '100vh' }} className="d-flex flex-column">
+        <div style={{ width: '250px', height: '100vh', position: 'fixed' }} className="d-flex flex-column">
             <Tab.Container activeKey={activeKey}>
                 <Nav variant="tabs" className="justify-content-center">
                     <Nav.Item>

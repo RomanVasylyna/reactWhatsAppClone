@@ -12,10 +12,10 @@ const Conversations = () => {
             {conversations.length ?
                 conversations.map(conversation => conversation.newConversation.map(conversation => conversation.contactName).join(',')).map((name, index) =>
                     <ListGroup.Item
-                    key={index}
-                    action
-                    onClick={() => selectConversationIndex(index)}
-                    active={index === selectedConversationIndex}>
+                        key={index}
+                        action
+                        onClick={() => selectConversationIndex(index)}
+                        active={index === selectedConversationIndex}>
                         {name}
                     </ListGroup.Item>
                 ) : <p>You have no conversations yet...</p>}

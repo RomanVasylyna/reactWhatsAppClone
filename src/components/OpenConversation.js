@@ -11,9 +11,20 @@ const OpenConversation = () => {
     // On form submit event
     const handleSubmit = e => {
         e.preventDefault();
-        
-        sendMessage(text);
-        setText('');
+
+        if (text != '') {
+            sendMessage(text);
+            setText('');
+        } else {
+            alert('Message can\'t be empty!');
+        }
+    }
+
+    // Send Form by pressing enter key
+    const handleKeyPress = e => {
+        if (e.key == 'Enter') {
+            handleSubmit(e);
+        }
     }
 
     useEffect(() => {
@@ -25,7 +36,7 @@ const OpenConversation = () => {
 
 
     return (
-        <div className="w-75 d-flex flex-column ps-4 pt-3">
+        <div className="w-75 d-flex flex-column ps-4 pt-3" style={{ position: 'absolute', left: '17vw' }}>
             <h1>Current Conversation</h1>
 
             {/* Conversation Participants */}
@@ -39,9 +50,9 @@ const OpenConversation = () => {
 
             {/* Messages */}
             <div className="flex-grow-1 overflow-auto">
-               { currentConversation[0] ? 
-               currentConversation[0].messages.map(message => <Card className="p-3">{ message }</Card>) 
-               : ''}
+                {currentConversation[0] ?
+                    currentConversation[0].messages.map(message => <Card className="p-3">{message}</Card>)
+                    : ''}
             </div>
 
             {/* Sending Messages */}
@@ -55,6 +66,7 @@ const OpenConversation = () => {
                             value={text}
                             style={{ height: '75px', resize: 'none' }}
                             onChange={e => setText(e.target.value)}
+                            onKeyPress={handleKeyPress}
                         />
 
                         <Button type="submit">Send</Button>
