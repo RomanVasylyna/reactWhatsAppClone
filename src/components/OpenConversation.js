@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useConversation } from '../contexts/ConversationProvider';
 import { Form, InputGroup, Button, Card } from 'react-bootstrap';
+import useMediaQuery from 'react-use-media-query-hook';
 
 const OpenConversation = () => {
+
+    // Media Queries
+    const isMobile = useMediaQuery('(max-width: 400px)');
+    const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 640px)');
+    const isDesktop = useMediaQuery('(min-width: 641px) and (max-width: 1024px)');
+    const isLargeDesktop = useMediaQuery('(min-width: 1025px)');
 
     const { conversations, sendMessage } = useConversation();
     const [currentConversation, setCurrentConversation] = useState([]);
@@ -34,10 +41,13 @@ const OpenConversation = () => {
     console.log(conversations);
 
 
-
     return (
         <div className="w-75 d-flex flex-column ps-4 pt-3" style={{ position: 'absolute', left: '17vw' }}>
-            <h1>Current Conversation</h1>
+             {isMobile && <h1>Mobile</h1>}
+             {isTablet && <h1>Tablet</h1>}
+
+
+             <h1>Open Conversation</h1>
 
             {/* Conversation Participants */}
             <p>Participants: {currentConversation.length ? currentConversation[0].newConversation.map((conv, index) => {
@@ -76,6 +86,8 @@ const OpenConversation = () => {
             </Form>
 
         </div>
+
+
     )
 }
 

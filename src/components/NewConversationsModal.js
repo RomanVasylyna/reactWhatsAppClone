@@ -23,23 +23,11 @@ const NewConversationsModal = ({ onClose, modalStatus }) => {
     const { createConversation } = useConversation();
     const { conversations } = useConversation();
 
-    // Remove duplicates from objects of conversations
-    // const removeDuplicates = () => {
-    //     const conversationExists = conversations.some(el => el.contactID === selectedContactId);
-
-    //     if (!conversationExists) {
-    //         createConversation(selectedContactId);
-    //     } else {
-    //         alert('You have already started conversation with this person');
-    //     }
-    // }
-
     // Functions that fire when form/modal is submitted
     const handleSubmit = e => {
         e.preventDefault();
 
         createConversation(selectedContactIds);
-        // removeDuplicates();
         onClose();
         setSelectedContactIds([]); //Clear State
     }
