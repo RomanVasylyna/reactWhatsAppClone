@@ -31,25 +31,31 @@ export const ConversationProvider = ({ children, userID }) => {
     }
 
     const removeConvDuplicates = ids => {
-        const conversationIds =  conversations.map(conversation => conversation.newConversation.map(conversation => conversation.recipientID).join(' ')).map(id => id);
-        const allValuesMatch = conversationIds.every(id => ids.indexOf(id) >= 0);
-        const someValuesMatch = conversationIds.some(id => ids.indexOf(id) >= 0);
+        const conversationIds = conversations.map(conversation => conversation.newConversation.map(conversation => conversation.recipientID).join(' ')).map(id => id);
+        const someValuesMatch = ids.some(id => conversationIds.indexOf(id) >= 0);
+        const allValuesMatch = conversationIds.every(id => ids.includes(id));
+
         // console.log(allValuesMatch);
         // console.log(someValuesMatch);
         // console.log(ids);
         // console.log(conversationIds);
-        return someValuesMatch;
+        return [someValuesMatch, allValuesMatch];
     }
 
     const createConversation = (ids) => {
 
-        if(ids.length) {
-            setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages:[], sender: userID }])
+        const matches = removeConvDuplicates(ids);
+        const singleMatch = matches[0];
+        const multipleMatch = matches[1];
+
+        if (ids.length && !multipleMatch) {
+            console.log(singleMatch);
+            setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID }])
         } else {
-            alert('Please choose at least one recipient');
+            alert('You already have this conversation');
         }
 
-        // return ids.length && !removeConvDuplicates(ids) ?
+        // return ids.length && !singleMatch ?
         //     setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages:[], sender: userID }])
         //     :
         //     alert('Please choose at least one recipient');
