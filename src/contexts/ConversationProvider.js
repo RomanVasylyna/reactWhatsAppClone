@@ -34,8 +34,7 @@ export const ConversationProvider = ({ children, userID }) => {
         const conversationIds = conversations.map(conversation => conversation.newConversation.map(conversation => conversation.recipientID).join(' ')).map(id => id);
         const someValuesMatch = ids.some(id => conversationIds.indexOf(id) >= 0);
         const allValuesMatch = conversationIds.every(id => ids.includes(id));
-
-        // console.log(allValuesMatch);
+        //console.log(allValuesMatch);
         // console.log(someValuesMatch);
         // console.log(ids);
         // console.log(conversationIds);
@@ -44,12 +43,18 @@ export const ConversationProvider = ({ children, userID }) => {
 
     const createConversation = (ids) => {
 
-        const matches = removeConvDuplicates(ids);
-        const singleMatch = matches[0];
-        const multipleMatch = matches[1];
+        const conversationIds = conversations.map(conversation => conversation.newConversation.map(conversation => conversation.recipientID).join(' ')).map(id => id);
+        const someValuesMatch = conversationIds.some(id => ids.includes(id));
+        const allValuesMatch = ids.every(id => conversationIds.includes(id));
 
-        if (ids.length && !multipleMatch) {
-            console.log(singleMatch);
+        // const matches = removeConvDuplicates(ids);
+        // const singleMatch = matches[0];
+        // const multipleMatch = matches[1];
+
+        if (ids.length && !someValuesMatch || ids.length && !allValuesMatch) {
+            // console.log(conversationIds);
+            // // console.log(singleMatch);
+            console.log(allValuesMatch);
             setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID }])
         } else {
             alert('You already have this conversation');
