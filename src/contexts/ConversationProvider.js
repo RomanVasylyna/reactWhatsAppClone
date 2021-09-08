@@ -48,34 +48,50 @@ export const ConversationProvider = ({ children, userID }) => {
 
     const createConversation = (ids) => {
 
-        const conversationIds = conversations.map(conversation => conversation.newConversation.map(conversation => conversation.recipientID)[0]).map(id => id);
+        const conversationIds = conversations.map((conversation, index) => conversation.newConversation.map(conversation => conversation.recipientID)[index]).map(id => id);
         const someValuesMatch = conversationIds.some(id => ids.includes(id));
         const allValuesMatch = ids.every(id => conversationIds.includes(id));
-        
+
         // const matches = removeConvDuplicates(ids);
         // const singleMatch = matches[0];
         // const multipleMatch = matches[1];
-        
+
         let arr1 = [1, 2, 3, 4];
         let arr2 = [2, 3];
-        let isFounded = arr1.some( ai => arr2.includes(ai) ); // некоторые из элементов [1, 2, 3] включают [2 и 3]
-        let allFounded = arr2.every( ai => arr1.includes(ai) ); // все элементы находящиеся в [2, 3] уже есть в [1, 2, 3]
+        let isFounded = arr1.some(ai => arr2.includes(ai)); // true только если некоторые из элементов массива [1, 2, 3, 4] включают [2 и 3]
+        let allFounded = arr2.every(ai => arr1.includes(ai)); // true только если все элементы массива [2, 3] уже есть в [1, 2, 3], а если есть только один то false
 
         // ["123"]
         // ["123", "321"]
         // Ids ["123", "321", "423432"]
         // coversationIds["123", "555", "321", "777", "423432"]
 
-        if (ids.length && !someValuesMatch) {
+        // if (ids.length && !someValuesMatch) {
+        //     console.log(ids);
+        //     console.log(conversationIds);
+        //     console.log(allValuesMatch);
+        //     setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID }])
+        // } else {
+        //     console.log(ids);
+        //     console.log(conversationIds);
+        //     console.log(allValuesMatch);
+        //     alert('You already have this conversation');
+        // }
+
+        if (ids.length) {
+            if (!allValuesMatch) {
             console.log(ids);
             console.log(conversationIds);
             console.log(allValuesMatch);
-            setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID }])
+                setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID }])
+            } else {
+                console.log(ids);
+                console.log(conversationIds);
+                console.log(allValuesMatch);
+                alert('You already have this conversation');
+            }
         } else {
-            console.log(ids);
-            console.log(conversationIds);
-            console.log(allValuesMatch);
-            alert('You already have this conversation');
+            alert('Please choose at least one recipient');
         }
 
         // return ids.length && !singleMatch ?
