@@ -18,7 +18,7 @@ export const ConversationProvider = ({ children, userID }) => {
 
     const [selectedConversationIndex, setSelectedConversationIndex] = useState(0);
 
-    // const [conversationIds, setConversationIds] = useState();
+    // const [conversationIdsIndex, setConversationIdsIndex] = useState(0);
 
     const sendMessage = text => {
         const currentConversation = conversations.filter(conversation => conversation.selected)[0];
@@ -48,11 +48,12 @@ export const ConversationProvider = ({ children, userID }) => {
         // const allValuesMatch = ids.every((id, index) => conversationIds[index].includes(id));
 
         const allValuesMatch = ids.every((id, index) => id === conversationIds[index]);
-        const test = conversationIds.map(conversation => conversation.every(conv => ids.include(conv)));
+        // при первом true новая конфа не должна создаться
+        const test = conversationIds.map(conversation => conversation.every(conv => ids.includes(conv)));
 
 
         if (ids.length) {
-            if (!test) {
+            if (!allValuesMatch) {
                 console.log(test); // массив со всеми айдишниками
                 console.log(ids); // добавленые айдишники
                 console.log(conversationIds); // все айдишники со в всех разговоров
