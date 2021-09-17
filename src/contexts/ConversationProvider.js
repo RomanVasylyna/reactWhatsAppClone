@@ -18,7 +18,7 @@ export const ConversationProvider = ({ children, userID }) => {
 
     const [selectedConversationIndex, setSelectedConversationIndex] = useState(0);
 
-    // const [conversationIdsIndex, setConversationIdsIndex] = useState(0);
+    const [conversationIdsIndex, setConversationIdsIndex] = useState(0);
 
     const sendMessage = text => {
         const currentConversation = conversations.filter(conversation => conversation.selected)[0];
@@ -49,20 +49,23 @@ export const ConversationProvider = ({ children, userID }) => {
 
         const allValuesMatch = ids.every((id, index) => id === conversationIds[index]);
         // при первом true новая конфа не должна создаться
-        const test = conversationIds.map(conversation => conversation.every(conv => ids.includes(conv)));
-
+        const test = conversationIds.map(conversation => conversation.every(conv => ids.includes(conv));
+        
+        // [123]
+        // []
 
         if (ids.length) {
-            if (!allValuesMatch) {
-                console.log(test); // массив со всеми айдишниками
+            if (!test[0]) {
+                console.log(test[0]); // массив со всеми айдишниками
                 console.log(ids); // добавленые айдишники
                 console.log(conversationIds); // все айдишники со в всех разговоров
-                console.log(allValuesMatch); // true/false ()
+                //console.log(allValuesMatch); // true/false ()
                 setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID }])
-            } else {
-                console.log(ids);
-                console.log(conversationIds);
-                console.log(allValuesMatch);
+                // setConversationIdsIndex(conversationIdsIndex+1);
+            } else { 
+                console.log(ids); // [123]
+                console.log(conversationIds); // []
+                // console.log(allValuesMatch);
                 alert('You already have this conversation');
             }
         } else {
