@@ -30,13 +30,23 @@ export const ConversationProvider = ({ children, userID }) => {
         return setConversations(conversations.map((el, ind) => ind === index ? { ...el, selected: true } : { ...el, selected: false }));
     }
 
-    const removeConvDuplicates = ids => {
-        const conversationIds = conversations.map(conversation => conversation.newConversation.map(conversation => conversation.recipientID));
-        // const someValuesMatch = ids.some(id => conversationIds.includes(id));
-        const allValuesMatch = ids.every(id => conversationIds.includes(id));
+    // const removeConvDuplicates = ids => {
+    //     let madeChange = false;
+    //     // const newMessage = {sender, text};
+    //     const check = conversations.map(conversation =>
+    //     if(arraysAreEqual(conversationRecipients, recipients)) {
+    //     madeChange = true;
+    //     return {
+    //     [...conversation, ]
+    //     }
+    //     })
 
-        return allValuesMatch;
-    }
+    //     if (madeChange) {
+    //         console.log('fdsfds');
+    //     } else {
+    //         setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID }])
+    //     }
+    // }
 
     const createConversation = (ids) => {
 
@@ -51,7 +61,7 @@ export const ConversationProvider = ({ children, userID }) => {
         // Remove duplicates from conversations
 
         const arraysMatch = ids.every(id => conversationIds.map(conversation => conversation).includes(id))
-        
+
         // const test = conversationIds.map(conversation => conversation);
         // const convFilter = ids.every((id, index) => test[index].includes(id));
         // переделать test так чтобы массив ids был основным при сравнении
@@ -59,7 +69,7 @@ export const ConversationProvider = ({ children, userID }) => {
 
 
         if (ids.length) {
-            if (!arraysMatch[0]) {
+            if (!test[0] && !test[1] && !test[2]) {
                 console.log(test); // массив со всеми айдишниками
                 console.log(ids); // добавленые айдишники
                 console.log(conversationIds); // все айдишники со в всех разговоров
@@ -68,8 +78,8 @@ export const ConversationProvider = ({ children, userID }) => {
                 setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID }])
                 // setConversationIdsIndex(conversationIdsIndex+1);
             } else {
-                console.log(ids); 
-                console.log(test); 
+                console.log(ids);
+                console.log(test);
                 console.log(conversationIds);
                 // console.log(convFilter); // true/false ()
                 alert('You already have this conversation');
