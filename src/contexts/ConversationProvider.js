@@ -48,6 +48,14 @@ export const ConversationProvider = ({ children, userID }) => {
     //     }
     // }
 
+
+    const validateConversations = (ids, conversationIds) => {
+        let check = false;
+        const test = conversationIds.map(conversation => conversation.every(conv => ids.includes(conv)));
+        
+    }
+
+
     const createConversation = (ids) => {
 
         const conversationIds = conversations.map(conversation => conversation.newConversation.map(conversation => conversation.recipientID));
@@ -58,9 +66,10 @@ export const ConversationProvider = ({ children, userID }) => {
         // при первом true новая конфа не должна создаться
 
         const test = conversationIds.map(conversation => conversation.every(conv => ids.includes(conv)));
-        // Remove duplicates from conversations
+        // const test2 = test.every(Boolean);
+        const test2 = test.some(el => el === false);
 
-        const arraysMatch = ids.every(id => conversationIds.map(conversation => conversation).includes(id))
+        const arraysMatch = ids.every(id => conversationIds.includes(id));
 
         // const test = conversationIds.map(conversation => conversation);
         // const convFilter = ids.every((id, index) => test[index].includes(id));
@@ -69,26 +78,17 @@ export const ConversationProvider = ({ children, userID }) => {
 
 
         if (ids.length) {
-            if (!test[0] && !test[1] && !test[2]) {
-                console.log(test); // массив со всеми айдишниками
+            if (!arraysMatch[0] && !arraysMatch[1]) {
+                // console.log(test);
+                console.log(arraysMatch);
                 console.log(ids); // добавленые айдишники
                 console.log(conversationIds); // все айдишники со в всех разговоров
-                console.log(arraysMatch);
-                // console.log(convFilter); // true/false ()
                 setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID }])
                 // setConversationIdsIndex(conversationIdsIndex+1);
             } else {
-                console.log(ids);
-                console.log(test);
-                console.log(conversationIds);
-                // console.log(convFilter); // true/false ()
                 alert('You already have this conversation');
             }
         } else {
-            console.log(test);
-            console.log(ids);
-            console.log(conversationIds);
-            // console.log(convFilter);
             alert('Please choose at least one recipient');
         }
 
