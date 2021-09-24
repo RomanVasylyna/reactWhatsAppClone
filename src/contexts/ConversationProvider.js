@@ -52,7 +52,7 @@ export const ConversationProvider = ({ children, userID }) => {
     const validateConversations = (ids, conversationIds) => {
         let check = false;
         const test = conversationIds.map(conversation => conversation.every(conv => ids.includes(conv)));
-        
+
     }
 
 
@@ -65,11 +65,18 @@ export const ConversationProvider = ({ children, userID }) => {
         // const allValuesMatch = ids.every((id, index) => id === conversationIds[index]);
         // при первом true новая конфа не должна создаться
 
+        // что если сравнивать не айдишники а именно сами объекты?
+
         const test = conversationIds.map(conversation => conversation.every(conv => ids.includes(conv)));
         // const test2 = test.every(Boolean);
-        const test2 = test.some(el => el === false);
-
-        const arraysMatch = ids.every(id => conversationIds.includes(id));
+    
+        // const isMatch = () => {
+        //     if (conversationIds === undefined) {
+        //         return
+        //     } else {
+        //         ids.every((id, index) => conversationIds[index].includes(id));
+        //     }
+        // }
 
         // const test = conversationIds.map(conversation => conversation);
         // const convFilter = ids.every((id, index) => test[index].includes(id));
@@ -78,15 +85,16 @@ export const ConversationProvider = ({ children, userID }) => {
 
 
         if (ids.length) {
-            if (!arraysMatch[0] && !arraysMatch[1]) {
-                // console.log(test);
-                console.log(arraysMatch);
-                console.log(ids); // добавленые айдишники
+            if (!test[1] && !test[2] && !test[3]) {
+                // console.log(test2);
+                // console.log(ids); // добавленые айдишники
                 console.log(conversationIds); // все айдишники со в всех разговоров
                 setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID }])
                 // setConversationIdsIndex(conversationIdsIndex+1);
             } else {
                 alert('You already have this conversation');
+                console.log(test);
+                console.log(conversationIds);
             }
         } else {
             alert('Please choose at least one recipient');
