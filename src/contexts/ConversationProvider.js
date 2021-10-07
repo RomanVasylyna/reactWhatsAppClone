@@ -21,8 +21,8 @@ export const ConversationProvider = ({ children, userID }) => {
     const [conversationIdsIndex, setConversationIdsIndex] = useState(0);
 
     // Set Test State
-    const[test, setTest] = useState(false);
-    const[testTwo, setTestTwo] = useState(false);
+    const [test, setTest] = useState(false);
+    const [testTwo, setTestTwo] = useState(false);
 
     const sendMessage = text => {
         const currentConversation = conversations.filter(conversation => conversation.selected)[0];
@@ -57,45 +57,23 @@ export const ConversationProvider = ({ children, userID }) => {
     const createConversation = (ids) => {
 
         const conversationIds = conversations.map(conversation => conversation.newConversation.map(conversation => conversation.recipientID));
-        // const someValuesMatch = conversationIds.some(id => ids.includes(id));
-        // const allValuesMatch = ids.every((id, index) => conversationIds[index].includes(id));
+        const newConv = { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID };
 
-        // const allValuesMatch = ids.every((id, index) => id === conversationIds[index]);
-        // при первом true новая конфа не должна создаться
-
-        // true/false
-        // setTestTwo(conversationIds.map(conversation => conversation.every(conv => ids.includes(conv))));// [true, true, true, true]
-        // const two = one.every(Boolean); //true
-
-        // one = array with booleans [true, true, true, true]
-        // two = if one (array with booleans) true return single true
-
-        // conversationIds.map(conversation => conversation.every(conv => ids.includes(conv))[0])[0]
-
-        // test = lastAdded conversation matched true/false
-        // testTwo = all conversations [true, true, false]
         setTest(conversationIds.map(conversation => conversation.every(conv => ids.includes(conv))[0])[0]);
-        setTestTwo(conversationIds.map(conversation => conversation.every(conv => ids.includes(conv))));
-
+        // setTestTwo(conversationIds.map(conversation => conversation.every(conv => ids.includes(conv))));
+        
+        let check = conversations.map(conversation => JSON.stringify(conversation) === JSON.stringify(newConv));
+        let check2 = conversationIds.map(conversation => conversation.every(conv => ids.includes(conv)));
+    
         if (ids.length) {
-            if (!testTwo.every(Boolean)) { //false
-                setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID }]);
+            if (!check.some(Boolean)) { //false
+                setConversations([...conversations, newConv]);
                 setTest(true);
-                console.log(testTwo);
-                // console.log(one);
-                // console.log(two);
-                // console.log(dodik);
-                // console.log(ifBool);
+                console.log(check);
+                check=[];
             } else {
                 alert('You already have this conversation');
                 setTest(false);
-                setTestTwo([]);
-                // console.log(dodik);
-                // console.log(ifBool);
-                // console.log(test);
-                // console.log(one);
-                // console.log(two);
-                // console.log(conversationIds);
             }
         } else {
             alert('Please choose at least one recipient');
