@@ -58,19 +58,30 @@ export const ConversationProvider = ({ children, userID }) => {
 
         const conversationIds = conversations.map(conversation => conversation.newConversation.map(conversation => conversation.recipientID));
         const newConv = { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID };
+        const newConvIds = newConv.newConversation.map(conv => conv.recipientID);
 
         setTest(conversationIds.map(conversation => conversation.every(conv => ids.includes(conv))[0])[0]);
         // setTestTwo(conversationIds.map(conversation => conversation.every(conv => ids.includes(conv))));
         
         let check = conversations.map(conversation => JSON.stringify(conversation) === JSON.stringify(newConv));
         let check2 = conversationIds.map(conversation => conversation.every(conv => ids.includes(conv)));
-    
-        if (ids.length) {
-            if (!check.some(Boolean)) { //false
+        
+
+        let check3 = conversationIds.map(conversationId => conversationId.every(id => newConvIds.includes(id)));
+        
+        // сравнить newConvIds и каждую из conversationIds при помощи every
+
+
+        if(ids.length) {
+            if (!check3.some(Boolean)) { //false
                 setConversations([...conversations, newConv]);
                 setTest(true);
-                console.log(check);
-                check=[];
+                // console.log(check);s
+                // console.log(check2);
+                console.log(newConvIds);
+                console.log(conversationIds);
+                console.log(check3);
+                check3=[];
             } else {
                 alert('You already have this conversation');
                 setTest(false);
