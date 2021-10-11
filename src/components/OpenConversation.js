@@ -52,11 +52,11 @@ const OpenConversation = ({style}) => {
              <h1>Open Conversation</h1>
 
             {/* Conversation Participants */}
-            <p>Participants: {currentConversation.length ? currentConversation[0].newConversation.map((conv, index) => {
-                if (index !== currentConversation[0].newConversation.length - 1) {
-                    return <span>{conv.contactName}, </span>
+            <p>Participants: {currentConversation.length ? currentConversation[0].recipients.map((conv, index) => {
+                if (index !== currentConversation[0].recipients.length - 1) {
+                    return <span>{conv.name}, </span>
                 } else {
-                    return <span>{conv.contactName}</span>
+                    return <span>{conv.name}</span>
                 }
             }) : ''}</p>
 

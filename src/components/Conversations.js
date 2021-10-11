@@ -10,7 +10,7 @@ const Conversations = () => {
 
         <ListGroup variant="flush">
             {conversations.length ?
-                conversations.map(conversation => conversation.newConversation.map(conversation => conversation.contactName).join(',')).map((name, index) =>
+                conversations.map(conversation => conversation.recipients.map(conversation => conversation.name).join(',')).map((name, index) =>
                     <ListGroup.Item
                         key={index}
                         action

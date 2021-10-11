@@ -18,12 +18,6 @@ export const ConversationProvider = ({ children, userID }) => {
 
     const [selectedConversationIndex, setSelectedConversationIndex] = useState(0);
 
-    const [conversationIdsIndex, setConversationIdsIndex] = useState(0);
-
-    // Set Test State
-    const [test, setTest] = useState(false);
-    const [testTwo, setTestTwo] = useState(false);
-
     const sendMessage = text => {
         const currentConversation = conversations.filter(conversation => conversation.selected)[0];
         currentConversation.messages.push(text);
@@ -34,10 +28,10 @@ export const ConversationProvider = ({ children, userID }) => {
         return setConversations(conversations.map((el, ind) => ind === index ? { ...el, selected: true } : { ...el, selected: false }));
     }
 
-    // const removeConvDuplicates = ids => {
-    //     let madeChange = false;
-    //     // const newMessage = {sender, text};
-    //     const check = conversations.map(conversation =>
+    const removeConvDuplicates = ids => {
+        //const newConv = { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID };
+        //let madeChange = false;
+
     //     if(arraysAreEqual(conversationRecipients, recipients)) {
     //     madeChange = true;
     //     return {
@@ -50,41 +44,45 @@ export const ConversationProvider = ({ children, userID }) => {
     //     } else {
     //         setConversations([...conversations, { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID }])
     //     }
-    // }
+    }
 
 
 
     const createConversation = (ids) => {
+        const conversationIds = conversations.map(conversation => conversation.recipients.map(conversation => conversation.id));
+        //const conversationIds = conversations.map(conversation => conversation.newConversation.map(conversation => conversation.recipientID));
 
-        const conversationIds = conversations.map(conversation => conversation.newConversation.map(conversation => conversation.recipientID));
-        const newConv = { newConversation: ids.map(id => { return { recipientID: id, contactName: contacts.filter(contact => contact.id === id)[0].name } }), selected: false, messages: [], sender: userID };
-        const newConvIds = newConv.newConversation.map(conv => conv.recipientID);
+        const newConv = { recipients:ids.map(id => { return { id, name: contacts.filter(contact => contact.id === id)[0].name } }), messages:[], selected: false, sender: userID };
 
-        setTest(conversationIds.map(conversation => conversation.every(conv => ids.includes(conv))[0])[0]);
+        //const newConvIds = newConv.newConversation.map(conv => conv.recipientID);
+
+        //setTest(conversationIds.map(conversation => conversation.every(conv => ids.includes(conv))[0])[0]);
         // setTestTwo(conversationIds.map(conversation => conversation.every(conv => ids.includes(conv))));
-        
-        let check = conversations.map(conversation => JSON.stringify(conversation) === JSON.stringify(newConv));
-        let check2 = conversationIds.map(conversation => conversation.every(conv => ids.includes(conv)));
-        
 
-        let check3 = conversationIds.map(conversationId => conversationId.every(id => newConvIds.includes(id)));
-        
+        let check = conversations.map(conversation => JSON.stringify(conversation) === JSON.stringify(newConv));
+        // let check2 = conversationIds.map(conversation => conversation.every(conv => ids.includes(conv)));
+
+
+        // let check3 = conversationIds.map(conversationId => conversationId.every(id => newConvIds.includes(id)));
+
         // сравнить newConvIds и каждую из conversationIds при помощи every
 
 
         if(ids.length) {
-            if (!check3.some(Boolean)) { //false
+            if (!check.some(Boolean)) { //false
                 setConversations([...conversations, newConv]);
-                setTest(true);
-                // console.log(check);s
+                // console.log(check);
                 // console.log(check2);
-                console.log(newConvIds);
-                console.log(conversationIds);
-                console.log(check3);
-                check3=[];
+                // console.log(newConvIds);
+                // console.log(conversationIds);
+                //console.log(check3);
+                check=[];
             } else {
                 alert('You already have this conversation');
-                setTest(false);
+                // console.log(testConv);
+                // console.log(newConv);
+                // console.log(newConvIds);
+                // console.log(conversationIds);
             }
         } else {
             alert('Please choose at least one recipient');
