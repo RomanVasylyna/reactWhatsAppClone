@@ -16,7 +16,7 @@ const Contacts = () => {
     return (
         <ListGroup variant="flush">
             {contacts.length ? contacts.map(contact =>
-                <ListGroup.Item key={contact.id}>
+                <ListGroup.Item key={contact.id} style={{ cursor:"pointer" }}>
                     <Image src="https://img.icons8.com/ios-glyphs/50/000000/user-male--v1.png" style={{ width: '2vw', marginRight: '5px' }} rounded />
                     <span>{contact.name}</span>
                 </ListGroup.Item>
