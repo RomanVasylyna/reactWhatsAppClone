@@ -10,26 +10,14 @@ const Dashboard = ({ userID, onLogout }) => {
 
     // Media Queries
     const isMobile = useMediaQuery('(max-width: 400px)');
-    const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 640px)');
-    const isDesktop = useMediaQuery('(min-width: 641px) and (max-width: 1024px)');
-    const isLargeDesktop = useMediaQuery('(min-width: 1025px)');
-
-    // Tablet Styles
-    const mediumDisplay = {
-        position: 'absolute',
-        left: '30vw'
-    }
-
-    const largeDisplay = {
-        position: 'absolute',
-        left: '17vw'
-    }
+    const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 991.98px)');
+    const isDesktop = useMediaQuery('(min-width: 992px) and (max-width: 1199.98px)');
+    const isLargeDesktop = useMediaQuery('(min-width: 1200px)');
 
     return (
         <div style={{ display: 'flex' }}>
             <SideBar userID={userID} onLogout={onLogout} />
-            {/* {conversations.length && mediumDisplay ? <OpenConversation style={mediumDisplay} /> : ''} */}
-            {conversations.length ? <OpenConversation style={largeDisplay} /> : ''}
+            {conversations.length ? <OpenConversation /> : ''}
         </div>
     )
 }
