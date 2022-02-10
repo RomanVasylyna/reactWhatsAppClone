@@ -4,7 +4,7 @@ import OpenConversation from '../components/OpenConversation';
 import { useConversation } from '../contexts/ConversationProvider';
 import useMediaQuery from 'react-use-media-query-hook';
 
-const Dashboard = ({ userID, onLogout }) => {
+const Dashboard = ({ userID, onLogout, chatModal }) => {
 
     const { conversations } = useConversation();
 
@@ -16,7 +16,7 @@ const Dashboard = ({ userID, onLogout }) => {
 
     return (
         <div style={{ display: 'flex' }}>
-            <SideBar userID={userID} onLogout={onLogout} />
+            <SideBar userID={userID} onLogout={onLogout} chatModal={chatModal}/>
             {conversations.length ? <OpenConversation /> : ''}
         </div>
     )
