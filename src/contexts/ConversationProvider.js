@@ -11,10 +11,16 @@ export const useConversation = () => {
     return useContext(ConversationContext);
 }
 
+
 export const ConversationProvider = ({ children, userID }) => {
 
     const { contacts } = useContacts();
     const [conversations, setConversations] = useLocalStorage('conversations', []);
+
+    // const [convIndex, setConvIndex] = useLocalStorage('convIndex', '');
+
+    // Chat Modal
+    const [chatModal, setChatModal] = useLocalStorage('mobileModal', false);
 
     const [selectedConversationIndex, setSelectedConversationIndex] = useState("");
 
@@ -25,6 +31,7 @@ export const ConversationProvider = ({ children, userID }) => {
 
     const selectConversationIndex = (index) => {
         setSelectedConversationIndex(index);
+        // setConvIndex(index);
         return setConversations(conversations.map((el, ind) => ind === index ? { ...el, selected: true } : { ...el, selected: false }));
     }
 
@@ -38,7 +45,7 @@ export const ConversationProvider = ({ children, userID }) => {
 
         // Making sure conversations objects are unique
         let unique = conversations.map(conversation => JSON.stringify(conversation) === JSON.stringify(newConv));
-        
+
         // сравнить newConvIds и каждую из conversationIds при помощи every
         // !unique.some(Boolean)
         // !checkEquality(ids, conversationIds);

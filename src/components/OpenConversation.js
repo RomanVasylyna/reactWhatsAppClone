@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useConversation } from '../contexts/ConversationProvider';
-import { Form, InputGroup, Button, Card } from 'react-bootstrap';
+import { Form, InputGroup, Button, Card, Modal } from 'react-bootstrap';
 import useMediaQuery from 'react-use-media-query-hook';
 
 const OpenConversation = () => {
@@ -41,6 +41,9 @@ const OpenConversation = () => {
     const [currentConversation, setCurrentConversation] = useState([]);
     const [text, setText] = useState('');
 
+    let show = localStorage.getItem('whatsapp-clone-mobileModal');
+
+
     // On form submit event
     const handleSubmit = e => {
         e.preventDefault();
@@ -62,6 +65,7 @@ const OpenConversation = () => {
 
     useEffect(() => {
         setCurrentConversation(conversations.filter(conversation => conversation.selected));
+        console.log(show);
     }, [conversations]);
 
     // conversations.filter(conversation => console.log(conversation.newConversation[0]));
@@ -73,45 +77,50 @@ const OpenConversation = () => {
             {/* Mobile Styling */}
             {isMobile &&
 
-                <div className="d-flex flex-column ps-3 pt-3">
+                <div className="d-flex flex-column pt-5">
 
-                    <h1>Current Conversation</h1>
+                    <Modal show={show}>
+                        <Modal.Header closeButton>
+                            <Modal.Title className="fw-6">
+                                <p> <span className="fw-bold">Participants:</span> {currentConversation.length ? currentConversation[0].recipients.map((conv, index) => {
+                                    if (index !== currentConversation[0].recipients.length - 1) {
+                                        return <span>{conv.name}, </span>
+                                    } else {
+                                        return <span>{conv.name}</span>
+                                    }
+                                }) : ''}</p>
+                            </Modal.Title>
+                        </Modal.Header>
 
-                    <p> <span>Participants:</span> {currentConversation.length ? currentConversation[0].recipients.map((conv, index) => {
-                        if (index !== currentConversation[0].recipients.length - 1) {
-                            return <span>{conv.name}, </span>
-                        } else {
-                            return <span>{conv.name}</span>
-                        }
-                    }) : ''}</p>
-
-
-                    <div className="flex-grow-1 overflow-auto">
-                        {currentConversation[0] ?
-                            currentConversation[0].messages.map(message => <Card className="p-3 w-25 my-1 bg-primary text-white">{`Me: ${message}`}</Card>)
-                            : ''}
-                    </div>
-
-                    <Form className="m-3" onSubmit={handleSubmit}>
-                        <Form.Group>
-                            <InputGroup className="flex-wrap">
-
-                                <Form.Control
-                                    as="textarea"
-                                    required
-                                    value={text}
-                                    style={{ height: '75px', resize: 'none' }}
-                                    onChange={e => setText(e.target.value)}
-                                    onKeyPress={handleKeyPress}
-                                />
-
-                                <Button type="submit">Send</Button>
-
-                            </InputGroup>
-                        </Form.Group>
-                    </Form>
+                        <Modal.Body>
+                            <div>
+                                {currentConversation[0] ?
+                                    currentConversation[0].messages.map(message => <Card className="p-3 w-25 my-1 bg-primary text-white">{`Me: ${message}`}</Card>)
+                                    : ''}
+                            </div>
+                        </Modal.Body>
 
 
+                        <Form className="m-3" onSubmit={handleSubmit}>
+                            <Form.Group>
+                                <InputGroup className="flex-wrap">
+
+                                    <Form.Control
+                                        as="textarea"
+                                        required
+                                        value={text}
+                                        style={{ height: '75px', resize: 'none' }}
+                                        onChange={e => setText(e.target.value)}
+                                        onKeyPress={handleKeyPress}
+                                    />
+
+                                    <Button type="submit">Send</Button>
+
+                                </InputGroup>
+                            </Form.Group>
+                        </Form>
+
+                    </Modal>
 
                 </div>
             }
