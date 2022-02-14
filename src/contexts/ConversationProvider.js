@@ -17,11 +17,6 @@ export const ConversationProvider = ({ children, userID }) => {
     const { contacts } = useContacts();
     const [conversations, setConversations] = useLocalStorage('conversations', []);
 
-    // const [convIndex, setConvIndex] = useLocalStorage('convIndex', '');
-
-    // Chat Modal
-    const [chatModal, setChatModal] = useLocalStorage('mobileModal', false);
-
     const [selectedConversationIndex, setSelectedConversationIndex] = useState("");
 
     const sendMessage = text => {
@@ -31,7 +26,6 @@ export const ConversationProvider = ({ children, userID }) => {
 
     const selectConversationIndex = (index) => {
         setSelectedConversationIndex(index);
-        // setConvIndex(index);
         return setConversations(conversations.map((el, ind) => ind === index ? { ...el, selected: true } : { ...el, selected: false }));
     }
 
