@@ -41,7 +41,11 @@ const OpenConversation = () => {
     const [currentConversation, setCurrentConversation] = useState([]);
     const [text, setText] = useState('');
 
-    let show = localStorage.getItem('whatsapp-clone-mobileModal');
+    // Modal
+    const [showModal, setShowModal] = useState(true);
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
+
 
 
     // On form submit event
@@ -65,7 +69,6 @@ const OpenConversation = () => {
 
     useEffect(() => {
         setCurrentConversation(conversations.filter(conversation => conversation.selected));
-        console.log(show);
     }, [conversations]);
 
     // conversations.filter(conversation => console.log(conversation.newConversation[0]));
@@ -77,9 +80,7 @@ const OpenConversation = () => {
             {/* Mobile Styling */}
             {isMobile &&
 
-                <div className="d-flex flex-column pt-5">
-
-                    <Modal show={show}>
+                    <Modal show={showModal} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title className="fw-6">
                                 <p> <span className="fw-bold">Participants:</span> {currentConversation.length ? currentConversation[0].recipients.map((conv, index) => {
@@ -92,10 +93,10 @@ const OpenConversation = () => {
                             </Modal.Title>
                         </Modal.Header>
 
-                        <Modal.Body>
+                        <Modal.Body className="w-100">
                             <div>
                                 {currentConversation[0] ?
-                                    currentConversation[0].messages.map(message => <Card className="p-3 w-25 my-1 bg-primary text-white">{`Me: ${message}`}</Card>)
+                                    currentConversation[0].messages.map(message => <Card className="p-3 my-1 bg-primary text-white">{`Me: ${message}`}</Card>)
                                     : ''}
                             </div>
                         </Modal.Body>
@@ -122,7 +123,6 @@ const OpenConversation = () => {
 
                     </Modal>
 
-                </div>
             }
 
             {/* Table Styling */}
