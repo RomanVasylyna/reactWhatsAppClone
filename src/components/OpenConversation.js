@@ -37,15 +37,9 @@ const OpenConversation = () => {
     const isDesktop = useMediaQuery('(min-width: 992px) and (max-width: 1199.98px)');
     const isLargeDesktop = useMediaQuery('(min-width: 1200px)');
 
-    const { conversations, sendMessage } = useConversation();
+    const { conversations, sendMessage, showModal, handleClose } = useConversation();
     const [currentConversation, setCurrentConversation] = useState([]);
     const [text, setText] = useState('');
-
-    // Modal
-    const [showModal, setShowModal] = useState(true);
-    const handleClose = () => setShowModal(false);
-    const handleShow = () => setShowModal(true);
-
 
 
     // On form submit event
@@ -80,7 +74,7 @@ const OpenConversation = () => {
             {/* Mobile Styling */}
             {isMobile &&
 
-                    <Modal show={showModal} onHide={handleClose}>
+                    <Modal show={showModal} onHide={handleClose(showModal)}>
                         <Modal.Header closeButton>
                             <Modal.Title className="fw-6">
                                 <p> <span className="fw-bold">Participants:</span> {currentConversation.length ? currentConversation[0].recipients.map((conv, index) => {

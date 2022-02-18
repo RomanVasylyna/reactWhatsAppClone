@@ -18,6 +18,11 @@ export const ConversationProvider = ({ children, userID }) => {
     const [conversations, setConversations] = useLocalStorage('conversations', []);
 
     const [selectedConversationIndex, setSelectedConversationIndex] = useState("");
+    
+    // Handle Mobile Behaviour
+    const [showModal, setShowModal] = useState(true);
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
 
     const sendMessage = text => {
         const currentConversation = conversations.filter(conversation => conversation.selected)[0];
@@ -26,6 +31,7 @@ export const ConversationProvider = ({ children, userID }) => {
 
     const selectConversationIndex = (index) => {
         setSelectedConversationIndex(index);
+        handleShow();
         return setConversations(conversations.map((el, ind) => ind === index ? { ...el, selected: true } : { ...el, selected: false }));
     }
 
