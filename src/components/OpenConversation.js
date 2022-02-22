@@ -74,7 +74,7 @@ const OpenConversation = () => {
             {/* Mobile Styling */}
             {isMobile &&
 
-                    <Modal show={showModal} onHide={handleClose(showModal)}>
+                    <Modal show={showModal} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title className="fw-6">
                                 <p> <span className="fw-bold">Participants:</span> {currentConversation.length ? currentConversation[0].recipients.map((conv, index) => {

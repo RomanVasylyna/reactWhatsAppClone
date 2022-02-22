@@ -66,7 +66,7 @@ export const ConversationProvider = ({ children, userID }) => {
 
     return (
         <ConversationContext.Provider
-            value={{ conversations, createConversation, selectConversationIndex, selectedConversationIndex, sendMessage }}>
+            value={{ conversations, createConversation, selectConversationIndex, selectedConversationIndex, sendMessage, showModal, handleClose }}>
             {children}
         </ConversationContext.Provider>
     )
