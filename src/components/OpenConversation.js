@@ -37,7 +37,7 @@ const OpenConversation = () => {
     const isDesktop = useMediaQuery('(min-width: 992px) and (max-width: 1199.98px)');
     const isLargeDesktop = useMediaQuery('(min-width: 1200px)');
 
-    const { conversations, sendMessage, showModal, handleClose } = useConversation();
+    const { conversations, sendMessage, removeMessage, showModal, handleClose } = useConversation();
     const [currentConversation, setCurrentConversation] = useState([]);
     const [text, setText] = useState('');
 
@@ -74,48 +74,48 @@ const OpenConversation = () => {
             {/* Mobile Styling */}
             {isMobile &&
 
-                    <Modal show={showModal} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title className="fw-6">
-                                <p> <span className="fw-bold">Participants:</span> {currentConversation.length ? currentConversation[0].recipients.map((conv, index) => {
-                                    if (index !== currentConversation[0].recipients.length - 1) {
-                                        return <span>{conv.name}, </span>
-                                    } else {
-                                        return <span>{conv.name}</span>
-                                    }
-                                }) : ''}</p>
-                            </Modal.Title>
-                        </Modal.Header>
+                <Modal show={showModal} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title className="fw-6">
+                            <p> <span className="fw-bold">Participants:</span> {currentConversation.length ? currentConversation[0].recipients.map((conv, index) => {
+                                if (index !== currentConversation[0].recipients.length - 1) {
+                                    return <span>{conv.name}, </span>
+                                } else {
+                                    return <span>{conv.name}</span>
+                                }
+                            }) : ''}</p>
+                        </Modal.Title>
+                    </Modal.Header>
 
-                        <Modal.Body className="w-100">
-                            <div>
-                                {currentConversation[0] ?
-                                    currentConversation[0].messages.map(message => <Card className="p-3 my-1 bg-primary text-white">{`Me: ${message}`}</Card>)
-                                    : ''}
-                            </div>
-                        </Modal.Body>
+                    <Modal.Body className="w-100">
+                        <div>
+                            {currentConversation[0] ?
+                                currentConversation[0].messages.map(message => <Card className="p-3 my-1 bg-primary text-white">{`Me: ${message}`}</Card>)
+                                : ''}
+                        </div>
+                    </Modal.Body>
 
 
-                        <Form className="m-3" onSubmit={handleSubmit}>
-                            <Form.Group>
-                                <InputGroup className="flex-wrap">
+                    <Form className="m-3" onSubmit={handleSubmit}>
+                        <Form.Group>
+                            <InputGroup className="flex-wrap">
 
-                                    <Form.Control
-                                        as="textarea"
-                                        required
-                                        value={text}
-                                        style={{ height: '75px', resize: 'none' }}
-                                        onChange={e => setText(e.target.value)}
-                                        onKeyPress={handleKeyPress}
-                                    />
+                                <Form.Control
+                                    as="textarea"
+                                    required
+                                    value={text}
+                                    style={{ height: '75px', resize: 'none' }}
+                                    onChange={e => setText(e.target.value)}
+                                    onKeyPress={handleKeyPress}
+                                />
 
-                                    <Button type="submit">Send</Button>
+                                <Button type="submit">Send</Button>
 
-                                </InputGroup>
-                            </Form.Group>
-                        </Form>
+                            </InputGroup>
+                        </Form.Group>
+                    </Form>
 
-                    </Modal>
+                </Modal>
 
             }
 
@@ -133,12 +133,18 @@ const OpenConversation = () => {
                         }
                     }) : ''}</p>
 
-
+                    {/* Messages */}
                     <div className="flex-grow-1 overflow-auto">
                         {currentConversation[0] ?
-                            currentConversation[0].messages.map(message => <Card className="p-3 w-75 my-1 bg-primary text-white">{`Me: ${message}`}</Card>)
+                            currentConversation[0].messages.map(message =>
+                                <Card className="p-3 w-75 my-1 bg-primary text-white d-flex flex-row justify-content-between">
+                                    <span>{`Me: ${message}`}</span>
+                                    <span className="fw-bold" style={{ cursor: 'pointer' }}>X</span>
+                                </Card>)
                             : ''}
                     </div>
+
+                    {/* Sending a message form */}
 
                     <Form className="mt-3" onSubmit={handleSubmit}>
                         <Form.Group>
@@ -225,9 +231,14 @@ const OpenConversation = () => {
                     }) : ''}</p>
 
 
-                    <div className="flex-grow-1 overflow-auto mb-3">
+                    {/* Messages */}
+                    <div className="flex-grow-1 overflow-auto">
                         {currentConversation[0] ?
-                            currentConversation[0].messages.map(message => <Card className="p-3 w-75 my-1 bg-primary text-white">{`Me: ${message}`}</Card>)
+                            currentConversation[0].messages.map(message =>
+                                <Card className="p-3 w-100 my-1 bg-primary text-white d-flex flex-row justify-content-between">
+                                    <span>{`Me: ${message}`}</span>
+                                    <span className="fw-bold bg-danger" style={{ cursor: 'pointer' }} onClick={removeMessage}>X</span>
+                                </Card>)
                             : ''}
                     </div>
 

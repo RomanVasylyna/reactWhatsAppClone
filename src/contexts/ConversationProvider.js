@@ -18,15 +18,25 @@ export const ConversationProvider = ({ children, userID }) => {
     const [conversations, setConversations] = useLocalStorage('conversations', []);
 
     const [selectedConversationIndex, setSelectedConversationIndex] = useState("");
-    
+
     // Handle Mobile Behaviour
     const [showModal, setShowModal] = useState(true);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
 
-    const sendMessage = text => {
+    // Push new message to the array
+    const sendMessage = message => {
         const currentConversation = conversations.filter(conversation => conversation.selected)[0];
-        currentConversation.messages.push(text);
+        currentConversation.messages.push(message);
+        console.log('Message Sent');
+        console.log(`Text: ${message}`);
+    }
+
+    // Remove the message from the array
+    const removeMessage = message => {
+        const currentConversation = conversations.filter(conversation => conversation.selected)[0];
+        console.log('Message Removed');
+        console.log(message);
     }
 
     const selectConversationIndex = (index) => {
@@ -66,7 +76,7 @@ export const ConversationProvider = ({ children, userID }) => {
 
     return (
         <ConversationContext.Provider
-            value={{ conversations, createConversation, selectConversationIndex, selectedConversationIndex, sendMessage, showModal, handleClose }}>
+            value={{ conversations, createConversation, selectConversationIndex, selectedConversationIndex, sendMessage, removeMessage, showModal, handleClose }}>
             {children}
         </ConversationContext.Provider>
     )
