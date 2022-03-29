@@ -90,7 +90,11 @@ const OpenConversation = () => {
                     <Modal.Body className="w-100">
                         <div>
                             {currentConversation[0] ?
-                                currentConversation[0].messages.map(message => <Card className="p-3 my-1 bg-primary text-white">{`Me: ${message}`}</Card>)
+                                currentConversation[0].messages.map(message =>
+                                    <Card className="p-3 my-1 bg-primary text-white">
+                                         <span>{`Me: ${message}`}</span>
+                                    <span className="fw-bold" style={{ cursor: 'pointer', position: 'absolute', left: '80vw' }} onClick={removeMessage}>X</span>
+                                    </Card>)
                                 : ''}
                         </div>
                     </Modal.Body>
@@ -134,12 +138,12 @@ const OpenConversation = () => {
                     }) : ''}</p>
 
                     {/* Messages */}
-                    <div className="flex-grow-1 overflow-auto">
+                    <div className="flex-grow-1 overflow-auto mb-5">
                         {currentConversation[0] ?
                             currentConversation[0].messages.map(message =>
-                                <Card className="p-3 w-75 my-1 bg-primary text-white d-flex flex-row justify-content-between">
+                                <Card className="p-3 w-100 my-1 bg-primary text-white">
                                     <span>{`Me: ${message}`}</span>
-                                    <span className="fw-bold" style={{ cursor: 'pointer' }}>X</span>
+                                    <span className="fw-bold" style={{ cursor: 'pointer', position: 'absolute', left: '50vw' }} onClick={removeMessage}>X</span>
                                 </Card>)
                             : ''}
                     </div>
@@ -171,7 +175,7 @@ const OpenConversation = () => {
 
 
 
-            {/* Table Styling */}
+            {/* Tablet Styling */}
             {isDesktop &&
 
                 <div className="d-flex flex-column pt-4 ps-5 mb-3" style={desktopStyles}>
@@ -186,9 +190,14 @@ const OpenConversation = () => {
                     }) : ''}</p>
 
 
-                    <div className="flex-grow-1 overflow-auto">
+                    {/* Messages */}
+                    <div className="flex-grow-1 overflow-auto mb-5">
                         {currentConversation[0] ?
-                            currentConversation[0].messages.map(message => <Card className="p-3 w-75 my-1 bg-primary text-white">{`Me: ${message}`}</Card>)
+                            currentConversation[0].messages.map(message =>
+                                <Card className="p-3 w-100 my-1 bg-primary text-white">
+                                    <span>{`Me: ${message}`}</span>
+                                    <span className="fw-bold" style={{ cursor: 'pointer', position: 'absolute', left: '10vw' }} onClick={removeMessage}>X</span>
+                                </Card>)
                             : ''}
                     </div>
 
@@ -232,12 +241,12 @@ const OpenConversation = () => {
 
 
                     {/* Messages */}
-                    <div className="flex-grow-1 overflow-auto">
+                    <div className="flex-grow-1 overflow-auto mb-5">
                         {currentConversation[0] ?
-                            currentConversation[0].messages.map(message =>
-                                <Card className="p-3 w-100 my-1 bg-primary text-white d-flex flex-row justify-content-between">
+                            currentConversation[0].messages.map((message, index) =>
+                                <Card className="p-3 w-100 my-1 bg-primary text-white">
                                     <span>{`Me: ${message}`}</span>
-                                    <span className="fw-bold bg-danger" style={{ cursor: 'pointer' }} onClick={removeMessage}>X</span>
+                                    <span className="fw-bold" style={{ cursor: 'pointer', position: 'absolute', left: '57vw' }} onClick={removeMessage(index)}>X</span>
                                 </Card>)
                             : ''}
                     </div>
