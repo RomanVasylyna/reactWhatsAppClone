@@ -63,7 +63,9 @@ const OpenConversation = () => {
 
     useEffect(() => {
         setCurrentConversation(conversations.filter(conversation => conversation.selected));
-    }, [conversations]);
+        console.log('Re-Render');
+        console.log(currentConversation);
+    }, [conversations, currentConversation[0].messages.length]);
 
     // conversations.filter(conversation => console.log(conversation.newConversation[0]));
 
@@ -92,8 +94,8 @@ const OpenConversation = () => {
                             {currentConversation[0] ?
                                 currentConversation[0].messages.map(message =>
                                     <Card className="p-3 my-1 bg-primary text-white">
-                                         <span>{`Me: ${message}`}</span>
-                                    <span className="fw-bold" style={{ cursor: 'pointer', position: 'absolute', left: '80vw' }} onClick={removeMessage}>X</span>
+                                        <span>{`Me: ${message}`}</span>
+                                        <span className="fw-bold" style={{ cursor: 'pointer', position: 'absolute', left: '80vw' }} onClick={removeMessage}>X</span>
                                     </Card>)
                                 : ''}
                         </div>
@@ -246,10 +248,13 @@ const OpenConversation = () => {
                             currentConversation[0].messages.map((message, index) =>
                                 <Card className="p-3 w-100 my-1 bg-primary text-white">
                                     <span>{`Me: ${message}`}</span>
-                                    <span className="fw-bold" style={{ cursor: 'pointer', position: 'absolute', left: '57vw' }} onClick={removeMessage(index)}>X</span>
+                                    <span className={index}
+                                        style={{ cursor: 'pointer', position: 'absolute', left: '57vw', fontWeight: 'bold' }}
+                                        onClick={e => removeMessage(e.target.className)}>X</span>
                                 </Card>)
                             : ''}
                     </div>
+
 
                     <Form onSubmit={handleSubmit}>
                         <Form.Group>

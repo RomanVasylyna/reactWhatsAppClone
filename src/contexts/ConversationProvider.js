@@ -33,13 +33,15 @@ export const ConversationProvider = ({ children, userID }) => {
     }
 
     // Remove the message from the array
-    const removeMessage = message => {
-        const currentConversation = conversations.filter(conversation => conversation.selected)[0];
-        console.log('Message Removed');
-        console.log(message);
+    const removeMessage = messageIndex => {
+        const messages = conversations.filter((conversation, index) => conversation.selected)[0].messages;
+        //const currentMsg = messages.filter((msg, ind) => ind == messageIndex)[0];
+        messages.splice(messageIndex, 1);
+        console.log('Message Deleted');
+        console.log(messages);
     }
 
-    const selectConversationIndex = (index) => {
+    const selectConversationIndex = index => {
         setSelectedConversationIndex(index);
         handleShow();
         return setConversations(conversations.map((el, ind) => ind === index ? { ...el, selected: true } : { ...el, selected: false }));
