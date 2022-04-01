@@ -17,7 +17,7 @@ export const ConversationProvider = ({ children, userID }) => {
     const { contacts } = useContacts();
     const [conversations, setConversations] = useLocalStorage('conversations', []);
 
-    const [selectedConversationIndex, setSelectedConversationIndex] = useState("");
+    const [selectedConversationIndex, setSelectedConversationIndex] = useState(0);
 
     // Handle Mobile Behaviour
     const [showModal, setShowModal] = useState(true);

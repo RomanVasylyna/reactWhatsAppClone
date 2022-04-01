@@ -65,7 +65,7 @@ const OpenConversation = () => {
         setCurrentConversation(conversations.filter(conversation => conversation.selected));
         console.log('Re-Render');
         console.log(currentConversation);
-    }, [conversations, currentConversation[0].messages.length]);
+    }, [conversations, conversations.filter(conversation => conversation.selected)[0]]);
 
     // conversations.filter(conversation => console.log(conversation.newConversation[0]));
 
