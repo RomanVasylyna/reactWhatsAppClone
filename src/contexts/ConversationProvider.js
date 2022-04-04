@@ -17,7 +17,7 @@ export const ConversationProvider = ({ children, userID }) => {
     const { contacts } = useContacts();
     const [conversations, setConversations] = useLocalStorage('conversations', []);
 
-    const [selectedConversationIndex, setSelectedConversationIndex] = useState(0);
+    const [selectedConversationIndex, setSelectedConversationIndex] = useState("");
 
     // Handle Mobile Behaviour
     const [showModal, setShowModal] = useState(true);
@@ -63,8 +63,8 @@ export const ConversationProvider = ({ children, userID }) => {
         // !checkEquality(ids, conversationIds);
         if (ids.length) {
             if (!unique.some(el => el)) { //false
+                setSelectedConversationIndex(0);
                 setConversations([...conversations, newConv]);
-                console.log(unique);
             } else {
                 alert('You already have this conversation');
             }

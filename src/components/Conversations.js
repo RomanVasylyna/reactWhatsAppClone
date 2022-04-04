@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Image, ListGroup } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 import { useConversation } from '../contexts/ConversationProvider';
 
 const Conversations = () => {
 
     const { conversations, selectConversationIndex, selectedConversationIndex } = useConversation();
+
 
     return (
 
